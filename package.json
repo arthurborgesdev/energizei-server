@@ -1,0 +1,16 @@
+{
+  "name": "energizei-server",
+  "version": "0.0.1",
+  "description": "Server to communicate with resin based air conditioner automation devices",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "resin.io",
+    "automation",
+    "energizei"
+  ],
+  "author": "Arthur Moisés",
+  "license": "ISC"
+}
