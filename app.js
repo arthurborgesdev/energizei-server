@@ -25,6 +25,27 @@ app.get('/infrared', (req, res) => {
   res.send('Hi');
 });
 
+app.get('/weather', (req, res) => {
+  MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
+    if (err) throw err;
+    const db = client.db(dbName);
+
+    findWeather(db, function(docs) {
+      console.log(docs);
+      client.close();
+      res.send(docs);
+    });
+  })
+});
+
+const findWeather = function(db, callback) {
+  const collection = db.collection('documents');
+  collection.find({}).toArray(function(err, docs) {
+    if(err) throw err;
+    callback(docs);
+  })
+};
+
 app.post('/create', urlencodedParser, (req, res) => {
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
@@ -41,8 +62,8 @@ app.post('/create', urlencodedParser, (req, res) => {
 
 const findIR = function(db, callback) {
   const collection = db.collection('infrared');
-
-  collection.findOne()
+  // finish building this query after findMany weather with D3.js
+  collection.findOne() //...
 }
 
 const insertDocuments = function(db, data, callback) {
