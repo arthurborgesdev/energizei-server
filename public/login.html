@@ -1,0 +1,28 @@
+<div class="container">
+  <form id="formData" action="/credentials" method="POST">
+    <input type="text" name="username"></input><br />
+    <input type="text" name="password"></input><br />
+    <button class="btn" type="submit">Login</button>
+  </form>
+</div>
+
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous">
+</script>
+<script>
+  var formData = JSON.stringify($("formData").serializeArray());
+
+  $.ajax({
+    type: "POST",
+    url: "/credentials",
+    data: formData,
+    success: function(){},
+    dataType: "json",
+    contentType : "application/json"
+  });
+
+
+</script>

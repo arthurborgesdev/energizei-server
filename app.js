@@ -3,13 +3,35 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const MONGODB_URL = "mongodb://heroku_pj5qws5n:j66hhrtsj1b489346gsmng6s2f@ds231090.mlab.com:31090/heroku_pj5qws5n";
 const dbName = "heroku_pj5qws5n";
 
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
 // see jsonParser documentation on npm for how to use
 var jsonParser = bodyParser.json();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('public'))
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/index.html"))
+});
+
+app.post('/credentials', (req, res) => {
+  console.log(req.body);
+  if(req.body.username == "Arthur" &&
+     req.body.password == "ene@321"
+   ) {
+      res.sendFile(path.join(__dirname, "/public/dashboard.html"))
+   } else {
+      res.sendFile(path.join(__dirname, "/public/index.html"))
+   }
+})
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/login.html"))
+});
 
 app.get('/infrared', (req, res) => {
   MongoClient.connect(MONGODB_URL, (err, client) => {
@@ -46,7 +68,7 @@ const findWeather = function(db, callback) {
   })
 };
 
-app.post('/create', urlencodedParser, (req, res) => {
+app.post('/create', (req, res) => {
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
     const db = client.db(dbName);
