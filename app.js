@@ -74,7 +74,8 @@ app.post('/weather', (req, res) => {
     const db = client.db(dbName);
 
     var weather = req.body;
-
+    // fazer aqui a autenticação
+    console.log(req.body.length);
     storeWeather(db, weather, function(docs) {
       console.log(docs.ops);
       client.close();
