@@ -76,9 +76,9 @@ app.post('/weather', (req, res) => {
     var weather = req.body;
 
     storeWeather(db, weather, function(docs) {
-      console.log(docs);
+      console.log(docs.ops);
       client.close();
-      res.send(docs);
+      res.send(docs.ops);
     });
   })
 });
