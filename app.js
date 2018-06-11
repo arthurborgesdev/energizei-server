@@ -34,10 +34,10 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/infrared', (req, res) => {
-  MongoClient.connect(MONGODB_URL, (err, client) => {
+  MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
     const db = client.db(dbName);
-    console.log(data);
+    //console.log(data);
 
     findIR(db, function() {
       client.close();
@@ -48,6 +48,19 @@ app.get('/infrared', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
+  MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
+    if (err) throw err;
+    const db = client.db(dbName);
+
+    findWeather(db, function(docs) {
+      console.log(docs);
+      client.close();
+      res.send(docs);
+    });
+  })
+});
+
+app.post('/weather', (req, res) => {
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
     const db = client.db(dbName);
