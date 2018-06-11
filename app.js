@@ -75,7 +75,8 @@ app.post('/weather', (req, res) => {
 
     var weather = req.body;
     // fazer aqui a autenticação
-    console.log(req.body.hasOwnProperty("RESIN_DEVICE_UUID"));
+    console.log(weather);
+    //console.log(req.body.hasOwnProperty("RESIN_DEVICE_UUID"));
     storeWeather(db, weather, function(docs) {
       console.log(docs.ops);
       client.close();
