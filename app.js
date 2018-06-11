@@ -65,7 +65,9 @@ app.post('/weather', (req, res) => {
     if (err) throw err;
     const db = client.db(dbName);
 
-    findWeather(db, function(docs) {
+    var weather = req.body;
+
+    storeWeather(db, weather, function(docs) {
       console.log(docs);
       client.close();
       res.send(docs);
@@ -73,11 +75,19 @@ app.post('/weather', (req, res) => {
   })
 });
 
-const findWeather = function(db, callback) {
+const storeWeather = function(db, callback) {
   const collection = db.collection('documents');
   collection.find({}).toArray(function(err, docs) {
     if(err) throw err;
     callback(docs);
+  })
+};
+
+const findWeather = function(db, weather, callback) {
+  const collection = db.collection('inserts');
+  collection.insertOne(weather, function(err, r) {
+    if(err) throw err;
+    callback(r);
   })
 };
 
