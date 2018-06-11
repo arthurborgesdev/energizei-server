@@ -84,7 +84,7 @@ app.post('/weather', (req, res) => {
 });
 
 const storeWeather = function(db, weather, callback) {
-  const collection = db.collection('inserts');
+  const collection = db.collection('documents');
   collection.insertOne(weather, function(err, r) {
     if(err) throw err;
     callback(r);
