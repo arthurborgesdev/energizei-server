@@ -60,6 +60,14 @@ app.get('/weather', (req, res) => {
   })
 });
 
+const findWeather = function(db, callback) {
+  const collection = db.collection('documents');
+  collection.find({}).toArray(function(err, docs) {
+    if(err) throw err;
+    callback(docs);
+  })
+};
+
 app.post('/weather', (req, res) => {
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
@@ -75,15 +83,7 @@ app.post('/weather', (req, res) => {
   })
 });
 
-const storeWeather = function(db, callback) {
-  const collection = db.collection('documents');
-  collection.find({}).toArray(function(err, docs) {
-    if(err) throw err;
-    callback(docs);
-  })
-};
-
-const findWeather = function(db, weather, callback) {
+const storeWeather = function(db, weather, callback) {
   const collection = db.collection('inserts');
   collection.insertOne(weather, function(err, r) {
     if(err) throw err;
