@@ -69,7 +69,8 @@ const findWeather = function(db, callback) {
 };
 
 app.post('/weather', (req, res) => {
-  var theBody = req.body;
+  var theBody = JSON.stringify(req.body); // está retornando vazio atualmente
+  // o motivo é que eu tenho que enviar como x-www-url-encoded
   console.log(theBody);
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
