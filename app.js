@@ -69,6 +69,8 @@ const findWeather = function(db, callback) {
 };
 
 app.post('/weather', (req, res) => {
+  var theBody = req.body;
+  console.log(theBody);
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
     const db = client.db(dbName);
