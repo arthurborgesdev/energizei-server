@@ -7,7 +7,7 @@ const path = require('path');
 
 const MONGODB_URL = "mongodb://heroku_pj5qws5n:j66hhrtsj1b489346gsmng6s2f@ds231090.mlab.com:31090/heroku_pj5qws5n";
 const dbName = "heroku_pj5qws5n";
-
+const ENERGIZEI_URL = "https://energizei-server.herokuapp.com/";
 // see jsonParser documentation on npm for how to use
 var jsonParser = bodyParser.json();
 
@@ -49,6 +49,9 @@ app.get('/infrared', (req, res) => {
   res.send('Hi');
 });
 
+
+// ------------------QUERIED from the DB ------------
+
 app.get('/weather', (req, res) => {
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
@@ -69,6 +72,19 @@ const findWeather = function(db, callback) {
     callback(docs);
   })
 };
+
+/* Exemplo de retorno
+{
+  "_id":"5b2a7e225deb0b0004fa2123",
+  "time_iso":"2018-06-20T13:17:36-03:00",
+  "device_id":"b22e4ea06305185933d4f81c44ab7d16",
+  "msg_type":"sensorWeather",
+  "temp":"26.2",
+  "humid":"60.6"
+}
+*/
+
+// ----------------------------------------------
 
 //Sent by device
 app.post('/weather', (req, res) => {
