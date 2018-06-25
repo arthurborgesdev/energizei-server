@@ -24,8 +24,10 @@ app.post('/credentials', (req, res) => {
      req.body.password == "ene@321"
    ) {
       res.sendFile(path.join(__dirname, "/public/dashboard.html"))
+      res.redirect("https://energizei-server.herokuapp.com/dashboard.html")
    } else {
       res.sendFile(path.join(__dirname, "/public/index.html"))
+      res.redirect("https://energizei-server.herokuapp.com/index.html")
    }
 })
 
@@ -68,9 +70,9 @@ const findWeather = function(db, callback) {
   })
 };
 
+//Sent by device
 app.post('/weather', (req, res) => {
-  var theBody = JSON.stringify(req.body); // está retornando vazio atualmente
-  // o motivo é que eu tenho que enviar como x-www-url-encoded
+  var theBody = JSON.stringify(req.body);
   console.log(theBody);
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
@@ -96,6 +98,7 @@ const storeWeather = function(db, weather, callback) {
   })
 };
 
+// ?
 app.post('/create', (req, res) => {
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
