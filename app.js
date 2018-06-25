@@ -67,7 +67,23 @@ app.get('/weather', (req, res) => {
 
 const findWeather = function(db, callback) {
   const collection = db.collection('documents');
-  collection.find({}).toArray(function(err, docs) {
+  // Must especify find so it does not loads all DB (over 1700 docs)
+  // filter by device id or by time
+  collection.find(
+    {
+      "device_id": {
+        $eq: "b22e4ea06305185933d4f81c44ab7d16"
+      },
+      "msg_type": {
+        $eq: "sensorWeather"
+      }
+    }, {
+      "time_iso": 1,
+      "temp": 1,
+      "humid": 1
+    }
+    // put query to get time in the last 24 hours
+  ).toArray(function(err, docs) {
     if(err) throw err;
     callback(docs);
   })
