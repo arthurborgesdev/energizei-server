@@ -70,6 +70,8 @@ const findWeather = function(db, callback) {
   const collection = db.collection('documents');
   // Must especify find so it does not loads all DB (over 1700 docs)
   // filter by device id or by time
+  console.log(moment());
+  var last24HoursFormated = moment().subtract(24, "h").format();
   collection.find(
     {
       "device_id": {
@@ -79,7 +81,7 @@ const findWeather = function(db, callback) {
         $eq: "sensorWeather"
       },
       "time_iso": {
-        $gt: moment().subtract(24, "h").toDate()
+        $gt: last24HoursFormated
       }
     }, {
       "time_iso": 1,
