@@ -72,9 +72,10 @@ const findWeather = function(db, callback) {
   // filter by device id or by time
   console.log(moment());
   var last24HoursFormated = moment().subtract(24, "h").format();
-  collection.find(
-    {
+  collection
+    .find({
       "device_id": {
+        // here the "device_id" must have correspondented id of the requester
         $eq: "b22e4ea06305185933d4f81c44ab7d16"
       },
       "msg_type": {
@@ -83,16 +84,17 @@ const findWeather = function(db, callback) {
       "time_iso": {
         $gt: last24HoursFormated
       }
-    }, {
-      "time_iso": 1,
-      "temp": 1,
-      "humid": 1
-    }
-    // put query to get time in the last 24 hours
-  ).toArray(function(err, docs) {
-    if(err) throw err;
-    callback(docs);
-  })
+    }).project({
+      //"time_iso": 1,
+      //"temp": 1,
+      //"humid": 1,
+      "device_id": 0,
+      "msg_type": 0,
+      "_id": 0
+    }).toArray(function(err, docs) {
+      if(err) throw err;
+      callback(docs);
+    })
 };
 
 /* Exemplo de retorno
