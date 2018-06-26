@@ -109,16 +109,22 @@ const findWeather = function(db, callback) {
 //Sent by device
 app.post('/weather', (req, res) => {
   var theBody = JSON.stringify(req.body);
-  console.log(theBody);
+  // first print, to see if the data sent by the device is been received by then
+  // controller
+  // console.log(theBody);
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
     const db = client.db(dbName);
 
     var weather = req.body;
+    /* ---- Here is the authentication process, which is not completed yet-----
     var weatherAuth = JSON.stringify(req.body);
     console.log(weatherAuth);
     console.log(weatherAuth.hasOwnProperty("temperature"));
+    */
+
     storeWeather(db, weather, function(docs) {
+      // After the data is stored, it logs only the meaningful part of data
       console.log(docs.ops);
       client.close();
       res.send(docs.ops);
@@ -135,6 +141,7 @@ const storeWeather = function(db, weather, callback) {
 };
 
 // ?
+//  maybe it's just a step to test/populate the database/ to see if things are ok
 app.post('/create', (req, res) => {
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
@@ -149,12 +156,6 @@ app.post('/create', (req, res) => {
   })
 })
 
-const findIR = function(db, callback) {
-  const collection = db.collection('infrared');
-  // finish building this query after findMany weather with D3.js
-  collection.findOne() //...
-}
-
 const insertDocuments = function(db, data, callback) {
   // Get the documents collection
   const collection = db.collection('documents');
@@ -163,6 +164,12 @@ const insertDocuments = function(db, data, callback) {
     console.log("Inserted data into the collection");
     callback(result);
   });
+}
+
+const findIR = function(db, callback) {
+  const collection = db.collection('infrared');
+  // finish building this query after findMany weather with D3.js
+  collection.findOne() //...
 }
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
