@@ -36,13 +36,13 @@
 
     <script>
       $(document).ready(function(){
-
+        $("#dbSearch").text("Cheguei até aqui!");
         $.ajax({
           crossDomain: true,
           url: "https://energizei-server.herokuapp.com/weather",
           type: "GET",
           sucess: function(data) {
-            $("dbSearch").text("Cheguei até aqui!");
+            $("#dbSearch").text("Cheguei até aqui!");
 
             /*
             var parsedTime = [];
@@ -95,14 +95,12 @@
 
             // Must Process the data
             // console.log(data);
+
+            console.log("Hi");
             */
-            console.log("Hi"); 
           }
         })
-
       })
-
-
     </script>
   </body>
 </html>

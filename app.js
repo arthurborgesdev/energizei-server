@@ -15,6 +15,7 @@ var jsonParser = bodyParser.json();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'))
+app.use(cors())
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"))
@@ -51,10 +52,10 @@ app.get('/infrared', (req, res) => {
   res.send('Hi');
 });
 
-
+//  cors(),
 // ------------------QUERIED from the DB ------------
 
-app.get('/weather', cors(), (req, res) => {
+app.get('/weather', (req, res) => {
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
     const db = client.db(dbName);
