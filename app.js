@@ -5,6 +5,7 @@ const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 const path = require('path');
 const moment = require('moment');
+const cors = require('cors');
 
 const MONGODB_URL = "mongodb://heroku_pj5qws5n:j66hhrtsj1b489346gsmng6s2f@ds231090.mlab.com:31090/heroku_pj5qws5n";
 const dbName = "heroku_pj5qws5n";
@@ -53,7 +54,7 @@ app.get('/infrared', (req, res) => {
 
 // ------------------QUERIED from the DB ------------
 
-app.get('/weather', (req, res) => {
+app.get('/weather', cors(), (req, res) => {
   MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
     if (err) throw err;
     const db = client.db(dbName);

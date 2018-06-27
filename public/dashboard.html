@@ -16,6 +16,8 @@
     <div class="chart-container" style="position: relative; height: 40vh; widht: 80vw">
       <canvas id="myChart"></canvas>
     </div>
+
+    <div id="dbSearch"></div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
@@ -40,7 +42,9 @@
           url: "https://energizei-server.herokuapp.com/weather",
           type: "GET",
           sucess: function(data) {
-            alert("ready");
+            $("dbSearch").text("Cheguei até aqui!");
+
+            /*
             var parsedTime = [];
             var parsedTemp = [];
             var parsedHumid = [];
@@ -91,6 +95,8 @@
 
             // Must Process the data
             // console.log(data);
+            */
+            console.log("Hi"); 
           }
         })
 
