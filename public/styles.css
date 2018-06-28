@@ -1,3 +1,11 @@
 h1 {
   color: rgb(0, 230, 100);
 }
+
+.chart-container-temperature {
+  padding: 10px 20px 500px 10px;
+}
+
+.chart-container-humidity {
+  padding: 120px 20px 500px 10px;
+}

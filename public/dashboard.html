@@ -13,8 +13,12 @@
   </head>
   <body>
     <h1>Energizei Dashboard</h1>
-    <div class="chart-container" style="position: relative; height: 40vh; widht: 80vw">
-      <canvas id="myChart"></canvas>
+    <div class="chart-container-temperature" style="position: relative; height: 40vh; widht: 80vw">
+      <canvas id="graficoTemperatura"></canvas>
+    </div>
+
+    <div class="chart-container-humidity" style="position: relative; height: 40vh; widht: 80vw">
+      <canvas id="graficoUmidade"></canvas>
     </div>
 
     <div id="dbSearch"></div>
@@ -36,19 +40,15 @@
 
     <script>
       $(document).ready(function(){
-        $("#dbSearch").text("Cheguei até aqui!");
         $.ajax({
           crossDomain: true,
           url: "https://energizei-server.herokuapp.com/weather",
           type: "GET",
-          sucess: function(data) {
-            $("#dbSearch").text("Fui sobrescrito");
+          success: function(data) {
 
-            /*
             var parsedTime = [];
             var parsedTemp = [];
             var parsedHumid = [];
-            alert(parsedHumid);
 
             for(var i = 0; i < data.length; i++) {
               parsedTime.push(data[i].time_iso);
@@ -56,19 +56,14 @@
               parsedHumid.push(data[i].humid);
             }
 
-            console.log(parsedTime);
-            console.log(parsedTemp);
-            console.log(parsedHumid);
-            alert(parsedHumid);
-
-            var ctx = document.getElementById("myChart").getContext('2d');
+            var ctx = document.getElementById("graficoTemperatura").getContext('2d');
             var myChart = new Chart(ctx, {
               type: 'line',
               data: {
-                labels: ["A","B","C","D",],
+                labels: parsedTime,
                 datasets: [{
-                  label: '# of Votes',
-                  data: [1, 2, 3, 4],
+                  label: 'Temperatura',
+                  data: parsedTemp,
                   backgroundColor: [
                     'rgba(255, 99, 132, 0.2)'
                   ],
@@ -81,7 +76,7 @@
               options: {
                 title: {
                   display: true,
-                  text: "Título de votos"
+                  text: "Temperatura"
                 },
                 scales: {
                   yAxes: [{
@@ -93,11 +88,42 @@
               }
             });
 
-            // Must Process the data
-            // console.log(data);
 
-            console.log("Hi");
-            */
+            var ctx = document.getElementById("graficoUmidade").getContext('2d');
+            var myChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: parsedTime,
+                datasets: [{
+                  label: 'Umidade',
+                  data: parsedHumid,
+                  backgroundColor: [
+                    'rgba(120, 255, 45, 0.2)'
+                  ],
+                  borderColor: [
+                    'rgba(120, 255, 45,1)'
+                  ],
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                title: {
+                  display: true,
+                  text: "Umidade"
+                },
+                scales: {
+                  yAxes: [{
+                    ticks: {
+                      beginAtZero:true
+                    }
+                  }]
+                }
+              }
+            });
+
+          },
+          error: function() {
+            alert("error");
           }
         })
       })
